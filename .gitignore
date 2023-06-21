@@ -1,0 +1,8 @@
+fast
+fast.exe
+*.log
+**/*test.go
+*config*
+*ps1
+.vscode
+images/**/*
