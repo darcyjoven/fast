@@ -5,3 +5,4 @@ fast.exe
 *config*
 *ps1
 .vscode
+temp/**/*
