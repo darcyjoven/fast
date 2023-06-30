@@ -54,13 +54,13 @@ func InitLogger() {
 }
 
 func getLogFile() (file string) {
-	name := viper.GetString("LogName")
+	name := viper.GetString("logname")
 	// 没有取到就设置为运行程序名
 	if name == "" {
 		name = os.Args[0]
 		name = filepath.Base(name)
 	}
-	file = viper.GetString("LogDir")
+	file = viper.GetString("logdir")
 	// 没有取到设置为当前目录
 	if file == "" {
 		file = "./"
@@ -70,7 +70,7 @@ func getLogFile() (file string) {
 	local, _ := time.LoadLocation("Asia/Shanghai")
 	date := time.Now().In(local)
 
-	interval := viper.GetString("LogInterval")
+	interval := viper.GetString("loginterval")
 	// 根据时间间隔设置日志名称
 	switch interval {
 	case "one":
