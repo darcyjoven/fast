@@ -22,10 +22,11 @@ THE SOFTWARE.
 package main
 
 import (
-	"github.com/darcyjoven/fast/logger"
+	"github.com/darcyjoven/fast/cmd"
+	"github.com/darcyjoven/fast/global"
 )
 
 func main() {
-	// cmd.Execute()
-	defer logger.L.Sync()
+	cmd.Execute()
+	defer global.L.Sync()
 }

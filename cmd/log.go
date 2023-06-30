@@ -1,4 +1,4 @@
-package logger
+package cmd
 
 import (
 	"encoding/json"
@@ -7,24 +7,21 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/darcyjoven/fast/cmd"
+	"github.com/darcyjoven/fast/global"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
 
-var (
-	L *zap.Logger
-)
+type constantClock time.Time
 
-func init() {
-	cmd.Execute()
-	cmd.InitConfig()
-	InitLogger()
+func (c constantClock) Now() time.Time { return time.Time(c) }
+func (c constantClock) NewTicker(d time.Duration) *time.Ticker {
+	return &time.Ticker{}
 }
 
-func InitLogger() {
+func initLogger() {
 	rawJSON := []byte(`{
 		"level": "debug",
 		"encoding": "console"
@@ -47,7 +44,7 @@ func InitLogger() {
 	date := time.Now().In(local)
 	clock := constantClock(date)
 
-	L = zap.Must(cfg.Build(
+	global.L = zap.Must(cfg.Build(
 		zap.WithClock(clock),
 		zap.Fields(zap.Int("pid", os.Getpid())),
 	))
