@@ -11,7 +11,7 @@ import (
 )
 
 // initConfig reads in config file and ENV variables if set.
-func initConfig() {
+func InitConfig() {
 	if cfgFile != "" {
 		// Use config file from the flag.
 		viper.SetConfigFile(cfgFile)

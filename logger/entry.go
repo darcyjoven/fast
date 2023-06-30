@@ -20,7 +20,7 @@ var (
 
 func init() {
 	cmd.Execute()
-	// cmd.InitConfig()
+	cmd.InitConfig()
 	InitLogger()
 }
 
