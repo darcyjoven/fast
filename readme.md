@@ -31,9 +31,9 @@ func initViperDefault() {
 	name := os.Args[0]
 	name = filepath.Base(name)
 	name = strings.Replace(name, filepath.Ext(name), "", 1) // 取运行程序的名称
-	viper.SetDefault("LogDir", "./")                        // 日志目录
-	viper.SetDefault("LogName", name)                       // 日志名称
-	viper.SetDefault("LogInterval", "day")                  // 日志名称
+	viper.SetDefault("logdir", "./")                        // 日志目录
+	viper.SetDefault("logname", name)                       // 日志名称
+	viper.SetDefault("loginterval", "day")                  // 日志名称
 }
 ```
 
