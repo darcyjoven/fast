@@ -1,4 +1,4 @@
-module github.com/darcyjoven/fast
+module fast
 
 go 1.18
 

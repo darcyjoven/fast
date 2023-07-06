@@ -22,11 +22,13 @@ THE SOFTWARE.
 package main
 
 import (
-	"github.com/darcyjoven/fast/cmd"
-	"github.com/darcyjoven/fast/global"
+	"fast/cmd"
+	"fast/global"
 )
 
 func main() {
 	cmd.Execute()
-	defer global.L.Sync()
+	if global.L != nil {
+		defer global.L.Sync()
+	}
 }
