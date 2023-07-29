@@ -39,7 +39,7 @@ var (
 		Use:   "generate",
 		Short: "产生默认配置文件",
 		Long: `如果你得配置文件修改乱了或不小心被删除，通过此命令产生新的配置文件。
-可以指定文件名，默认为~/.fast.yaml。
+可以指定文件名，默认为.fast.yaml。
 `,
 		Run: generate,
 	}
@@ -47,14 +47,10 @@ var (
 )
 
 func init() {
-	home, err := os.UserHomeDir()
-	if err != nil {
-		cobra.CheckErr(err)
-	}
 	// generate cmd flag
 	generateFile = generateCmd.Flags().StringP(
-		"file", "f", filepath.Join(home, ".fast.yaml"),
-		`指定文件名，默认为~/.fast.yaml。
+		"file", "f", ".fast.yaml",
+		`指定文件名，默认为.fast.yaml。
 允许的后缀名为`+supportExt()+`，如果无后缀名或不在允许范围，会自动增加后缀.yaml。
 如果指定目录，未指定文件名，默认文件名为.fast.yaml。`)
 	rootCmd.AddCommand(generateCmd)

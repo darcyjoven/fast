@@ -56,7 +56,7 @@ func init() {
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "~/.fast.yaml", "config file 允许的后缀类型包括:"+supportExt())
+	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", ".fast.yaml", "config file 允许的后缀类型包括:"+supportExt())
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
