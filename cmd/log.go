@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -16,27 +15,37 @@ import (
 )
 
 func initLogger() {
-	rawJSON := []byte(`{
-		"level": "debug",
-		"encoding": "console"
-	  }`)
-	var cfg zap.Config
-
-	if err := json.Unmarshal(rawJSON, &cfg); err != nil {
-		panic(err)
-	}
-	file := getLogFile()
-	if file == "" {
+	path := getLogFile()
+	if path == "" {
 		panic("")
 	}
-	cfg.OutputPaths = append(cfg.OutputPaths, "stdout", file)
-	cfg.EncoderConfig = zap.NewProductionEncoderConfig()
-	cfg.EncoderConfig.EncodeTime = zapcore.TimeEncoderOfLayout("-07:00 06-01-02 15:04:05.00")
-	cfg.EncoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
-
+	atom := zap.NewAtomicLevel()
+	atom.SetLevel(zap.DebugLevel)
+	cfg := zap.Config{
+		Level:            atom,
+		Encoding:         "console",
+		OutputPaths:      []string{"stdout", path},
+		ErrorOutputPaths: []string{"stderr"},
+	}
+	cfg.EncoderConfig = zapcore.EncoderConfig{
+		TimeKey:        "time",
+		LevelKey:       "level",
+		NameKey:        "logger",
+		CallerKey:      "caller",
+		FunctionKey:    zapcore.OmitKey,
+		MessageKey:     "msg",
+		LineEnding:     zapcore.DefaultLineEnding,
+		EncodeLevel:    zapcore.CapitalLevelEncoder,
+		EncodeTime:     customTimeEncoder,
+		EncodeDuration: zapcore.SecondsDurationEncoder,
+		EncodeCaller:   zapcore.ShortCallerEncoder,
+	}
 	global.L = zap.Must(cfg.Build(
 		zap.Fields(zap.Int("pid", os.Getpid())),
+		zap.AddCaller(),
+		zap.Development(),
 	))
+	global.L.Info("aas")
 }
 
 func getLogFile() (file string) {
@@ -84,4 +93,8 @@ func getLogFile() (file string) {
 		}
 	}
 	return file
+}
+
+func customTimeEncoder(t time.Time, encoder zapcore.PrimitiveArrayEncoder) {
+	encoder.AppendString("[fast]" + t.Format("2006/01/02 - 15:04:05.000"))
 }
