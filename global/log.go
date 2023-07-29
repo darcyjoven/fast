@@ -5,5 +5,7 @@ import (
 )
 
 var (
-	L *zap.Logger
+	L       *zap.Logger
+	LogName string
+	LogPath string
 )
