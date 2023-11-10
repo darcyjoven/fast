@@ -23,12 +23,8 @@ package main
 
 import (
 	"fast/cmd"
-	"fast/global"
 )
 
 func main() {
 	cmd.Execute()
-	if global.L != nil {
-		defer global.L.Sync()
-	}
 }

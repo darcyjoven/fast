@@ -1,4 +1,5 @@
 /*
+Package cmd
 Copyright © 2023 darcy joven <darcy_joven@live.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -82,16 +83,33 @@ func generate(cmd *cobra.Command, args []string) {
 	}
 	err := viper.SafeWriteConfigAs(*generateFile)
 	if err != nil {
-		fmt.Fprintln(os.Stderr, "file write failed ", *generateFile, err.Error())
+		_, fprintln := fmt.Fprintln(os.Stderr, "file write failed ", *generateFile, err.Error())
+		if fprintln != nil {
+			fmt.Println(err)
+			return
+		}
 		return
 	}
-	fmt.Fprintln(os.Stderr, "success generate file :", *generateFile)
+	_, err = fmt.Fprintln(os.Stderr, "success generate file :", *generateFile)
+	if err != nil {
+		fmt.Println(err)
+	}
 }
 
+// supportExt
+//
+//	@Description: 支持的后缀名
+//	@return string
 func supportExt() string {
 	return strings.Join(viper.SupportedExts, ",")
 }
 
+// stringInSlice
+//
+//	@Description:判断元素在数组中否
+//	@param a
+//	@param list
+//	@return bool
 func stringInSlice(a string, list []string) bool {
 	for _, b := range list {
 		if b == a {

@@ -1,4 +1,5 @@
 /*
+Package cmd
 Copyright © 2023 darcy joven <darcy_joven@live.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

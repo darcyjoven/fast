@@ -14,7 +14,9 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-// 初始化日志
+// initLogger
+//
+//	@Description: 日志初始化
 func initLogger() {
 	// 初始化全局日志
 	err := initLogGlobal()
@@ -62,13 +64,13 @@ func initLogger() {
 
 }
 
-// 自定义时间编码器
+// customTimeEncoder 自定义时间编码器
 func customTimeEncoder(t time.Time, encoder zapcore.PrimitiveArrayEncoder) {
 	// 添加时间字符串
 	encoder.AppendString("[fast]" + t.Format("2006/01/02 - 15:04:05.000"))
 }
 
-// 初始化全局日志
+// initLogGlobal 初始化全局日志
 func initLogGlobal() (err error) {
 	// 从配置中获取日志目录，如果没有则使用默认值
 	global.LogPath = viper.GetString("logdir")
@@ -97,7 +99,7 @@ func initLogGlobal() (err error) {
 	return nil
 }
 
-// 获取日志名后缀
+// logExt 获取日志名后缀
 func logExt() string {
 	// 获取上海时间
 	local, _ := time.LoadLocation("Asia/Shanghai")
